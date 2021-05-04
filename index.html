@@ -1,49 +1,49 @@
-<!--
-w 17 h 13
-w 340
-h 260
-
--->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(to bottom, lightblue, darkblue);
-    }
-    h3 {
-      font-size: 4em;
-    }
-    button {
-      width:100%;
-      height:50px;
-    }
-    #game {
-      font-family: 'Orbitron', sans-serif;
-/*      background: #2b6b03;*/
-    }
-  </style>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript - snake</title>
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      body {
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: linear-gradient(to bottom, lightblue, darkblue);
+      }
+      h3 {
+        font-size: 4em;
+      }
+      button {
+        width:100%;
+        height:50px;
+      }
+      #canvas {
+        font-family: 'Orbitron', sans-serif;
+        background: darkblue;
+      }
+    </style>
 </head>
+
 <body>
 
-<!--  <canvas id="game" width="627" height="495"></canvas>-->
-  <canvas id="game" width="1098px" height="867px"></canvas>
+<!--    <h1>JavaScript - Drawing a Line</h1>-->
 
-  <script src="main.js"></script>
+    <canvas id="canvas" height="500" width="500">
+    </canvas>
+    <script src="fruit.js"></script>
+    <script src="snake.js"></script>
+    <script src="main.js"></script>
+
 </body>
+
 </html>
