@@ -18,8 +18,6 @@ var snake;
   snake = new Snake();
   fruit = new Fruit();
   fruit.pickLocation();
-  console.log(fruit);
-  //snake.draw();
 
   window.setInterval(() => {
     ctx.clearRect(0,0, canvas.width, canvas.height);
@@ -29,8 +27,11 @@ var snake;
 
     if (snake.eat(fruit)) {
       fruit.pickLocation();
-
     }
+
+    snake.checkCollision();
+
+    document.querySelector('.score').innerText = snake.total;
 
   }, 250);
 }());
@@ -38,7 +39,6 @@ var snake;
 
 window.addEventListener('keydown', ((evt) => {
   const direction = evt.key.replace('Arrow','');
-  console.log(direction);
   snake.changeDirection(direction);
 }))
 
