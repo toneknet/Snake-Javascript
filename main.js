@@ -8,11 +8,16 @@ var mapSizeW = 24;
 
 const scale = 10;
 
+var LastTime = 0;
+var game = 0; // 0 = stop, 1 = run
+var bolGameOver = false;
+
 
 canvas.width = tileSize * mapSizeW;
 canvas.height = tileSize * mapSizeH;
 
 var snake;
+var wall = false;
 
 (function setup() {
   snake = new Snake();
@@ -20,7 +25,15 @@ var snake;
   fruit.pickLocation();
 
   window.setInterval(() => {
+
     ctx.clearRect(0,0, canvas.width, canvas.height);
+
+    if (!game) {
+      gameOver();
+      return;
+    }
+
+
     fruit.draw();
     snake.update();
     snake.draw();
@@ -29,22 +42,69 @@ var snake;
       fruit.pickLocation();
     }
 
-    snake.checkCollision();
-
-    document.querySelector('.score').innerText = snake.total;
+    if (snake.checkCollision()) {
+      game=0;
+      bolGameOver = true;
+    }
+    ctx.fillStyle = "grey";
+    ctx.font = "bold 10pt Orbitron";
+    ctx.fillText("Score: " + snake.total,canvas.width-80,20);
 
   }, 250);
 }());
 
+//console.log(ctx);
 
 window.addEventListener('keydown', ((evt) => {
   const direction = evt.key.replace('Arrow','');
+  if (!game && direction !== "Home") snake.setStart();
   snake.changeDirection(direction);
 }))
 
 
+function gameOver() {
+  ctx.fillStyle = "white";
+  //ctx.font = "bold 20pt Orbitron";
+  ctx.font = "60px Orbitron";
+
+  //console.log(ctx.measureText('GAME OVER'));
+  if (bolGameOver) {
+    var textString = "GAME OVER";
+    textWidth = ctx.measureText(textString ).width;
+    ctx.fillText(textString,(canvas.width/2) - (textWidth / 2),canvas.height/2);
+  }
+  //ctx.fillText("GAME OVER",(canvas.width)/6,canvas.height/2);
+
+  ctx.font = "20px Orbitron";
+  var textString = "PRESS SPACE TO START";
+  textWidth = ctx.measureText(textString ).width;
+  // Flash av denna text
+  ctx.fillText(textString,(canvas.width/2) - (textWidth / 2),canvas.height/2+40);
+
+  updateWallText();
+}
+
+function updateWallText() {
+  ctx.font = "16px Orbitron";
+  var textString = "HOME button toggle wall collission! Its now ";
+  textString+= (wall) ? "OFF" : "ON";
+//  textStringx= (wall) ? "" : "Walls will kill you";
+  ctx.fillText(textString,5,canvas.height-18);
+//ctx.fillText(textString,5,canvas.height-38);
+//  ctx.fillText(textStringx,5,canvas.height-18);
+}
 
 
+
+function gameLoop(t) {
+  var diff = Math.floor(t - LastTime);
+  LastTime = t;
+  //console.log(diff);
+
+  requestAnimationFrame(gameLoop);
+}
+
+//gameLoop();
 
 /*ctx.strokeStyle = 'red';
 ctx.lineWidth = 5;

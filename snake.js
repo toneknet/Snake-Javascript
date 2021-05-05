@@ -2,9 +2,9 @@ class Snake
 {
     constructor()
     {
-      this.x = 0;
-      this.y = 0;
-      this.xSpeed = tileSize *1;
+      this.x = (mapSizeW * tileSize) / 2;
+      this.y = (mapSizeH * tileSize) / 2;
+      this.xSpeed = 0;
       this.ySpeed = 0;
       this.total = 0;
       this.tail = [];
@@ -29,6 +29,11 @@ class Snake
           this.xSpeed = tileSize * 1;
           this.ySpeed = 0;
           break;
+        case 'Home' :
+          if (!game) {
+            wall = (wall) ? false : true;
+          }
+          break;
       }
     }
 
@@ -36,8 +41,8 @@ class Snake
     {
       for (var i=0; i<this.tail.length; i++) {
         if(this.x === this.tail[i].x && this.y === this.tail[i].y) {
-          this.total = 0;
-          this.tail = [];
+          this.gameover();
+          return true;
         }
       }
     }
@@ -45,9 +50,15 @@ class Snake
     draw()
     {
       ctx.fillStyle = "white";
+      // Generates tail color here
+      var tmp = generateColor('#FFFFFF','#800080',this.tail.length);
       for (let i=0; i<this.tail.length; i++) {
+         if (tmp !== undefined) {
+          ctx.fillStyle = "#" + tmp[i];
+         }
         ctx.fillRect(this.tail[i].x, this.tail[i].y, tileSize, tileSize);
       }
+      ctx.fillStyle = "purple";
       ctx.fillRect(this.x, this.y, tileSize, tileSize);
     }
 
@@ -60,6 +71,24 @@ class Snake
       return false;
     }
 
+    gameover()
+    {
+      this.total = 0;
+      this.tail = [];
+      this.xSpeed = 0;
+      this.ySpeed = 0;
+      game=0;
+      bolGameOver = true;
+    }
+
+    setStart()
+    {
+      this.x = (mapSizeW * tileSize) / 2;
+      this.y = (mapSizeH * tileSize) / 2;
+      game=1;
+      fruit.pickLocation();
+    }
+
     update()
     {
       for (let i=0; i< this.tail.length -1; i++) {
@@ -68,25 +97,36 @@ class Snake
 
       this.tail[this.total -1] = {x: this.x, y: this.y};
 
-
       this.x += this.xSpeed;
       this.y += this.ySpeed;
 
-      if ( this.x > canvas.width) {
-        this.x = 0;
+      if (!wall ) {
+        if (
+          this.x > canvas.width ||
+          this.y > canvas.height ||
+          this.x < 0 ||
+          this.y < 0
+        ) {
+          this.gameover();
+        }
+      } else {
+        if ( this.x > canvas.width) {
+          this.x = 0;
+        }
+
+        if ( this.y > canvas.height) {
+          this.y = 0;
+        }
+
+        if ( this.x < 0) {
+          this.x = canvas.width;
+        }
+
+        if ( this.y < 0 ) {
+          this.y = canvas.width;
+        }
       }
 
-      if ( this.y > canvas.height) {
-        this.y = 0;
-      }
-
-      if ( this.x < 0) {
-        this.x = canvas.width;
-      }
-
-      if ( this.y < 0 ) {
-        this.y = canvas.width;
-      }
     }
 
 }
