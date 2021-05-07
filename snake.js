@@ -58,6 +58,7 @@ class Snake
 
     draw()
     {
+      var padding=2;
       ctx.fillStyle = "white";
       // Generates tail color here
       var tmp = generateColor('#FFFFFF','#800080',this.tail.length);
@@ -65,7 +66,7 @@ class Snake
          if (tmp !== undefined) {
           ctx.fillStyle = "#" + tmp[i];
          }
-        ctx.fillRect(this.tail[i].x, this.tail[i].y, tileSize, tileSize);
+        ctx.fillRect(this.tail[i].x+padding, this.tail[i].y+padding, tileSize-(padding*2), tileSize-(padding*2));
       }
       ctx.fillStyle = "purple";
       ctx.fillRect(this.x, this.y, tileSize, tileSize);
