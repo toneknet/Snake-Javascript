@@ -41,7 +41,6 @@ var wall = false;
     if (snake.checkCollision()) {
       game=0;
       bolGameOver = true;
-
     }
 
     if (snake.eat(fruit)) {
