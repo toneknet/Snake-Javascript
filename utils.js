@@ -56,13 +56,3 @@ function generateColor(colorStart,colorEnd,colorCount){
 	return saida;
 
 }
-
-// Exemplo de como usar
-
-
-/*var tmp = generateColor('#FFFFFF','#800080',);
-
-for (cor in tmp) {
-  $('#result_show').append("<div style='padding:8px;color:#FFF;background-color:#"+tmp[cor]+"'>COLOR "+cor+"° - #"+tmp[cor]+"</div>")
-
-}*/

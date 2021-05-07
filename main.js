@@ -12,6 +12,7 @@ var LastTime = 0;
 var game = 0; // 0 = stop, 1 = run
 var bolGameOver = false;
 
+const eatSound = new Audio("sound1.wav");
 
 canvas.width = tileSize * mapSizeW;
 canvas.height = tileSize * mapSizeH;
@@ -86,7 +87,7 @@ function gameOver() {
 
 function updateWallText() {
   ctx.font = "16px Orbitron";
-  var textString = "HOME button toggle wall collission! Its now ";
+  var textString = "HOME key toggles wall collission! Its now ";
   textString+= (wall) ? "OFF" : "ON";
 //  textStringx= (wall) ? "" : "Walls will kill you";
   ctx.fillText(textString,5,canvas.height-18);

@@ -66,6 +66,7 @@ class Snake
     {
       if(this.x === fruit.x && this.y === fruit.y) {
         this.total++;
+        eatSound.play();
         return true;
       }
       return false;
