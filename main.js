@@ -13,6 +13,7 @@ var game = 0; // 0 = stop, 1 = run
 var bolGameOver = false;
 
 const eatSound = new Audio("sound1.wav");
+const gameoverSound = new Audio("sound2.wav");
 
 canvas.width = tileSize * mapSizeW;
 canvas.height = tileSize * mapSizeH;
@@ -35,18 +36,22 @@ var wall = false;
     }
 
 
-    fruit.draw();
     snake.update();
-    snake.draw();
-
-    if (snake.eat(fruit)) {
-      fruit.pickLocation();
-    }
 
     if (snake.checkCollision()) {
       game=0;
       bolGameOver = true;
+
     }
+
+    if (snake.eat(fruit)) {
+      fruit.pickLocation();
+    }
+    fruit.draw();
+    snake.draw();
+
+
+
     ctx.fillStyle = "grey";
     ctx.font = "bold 10pt Orbitron";
     ctx.fillText("Score: " + snake.total,canvas.width-80,20);

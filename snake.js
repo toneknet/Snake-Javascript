@@ -15,18 +15,26 @@ class Snake
       switch (direction) {
         case 'Up' :
           this.xSpeed = 0;
-          this.ySpeed = -tileSize * 1;
+          if (this.ySpeed === 0 || this.tail.length === 0) {
+            this.ySpeed = -tileSize * 1;
+          }
           break;
         case 'Down' :
           this.xSpeed = 0;
-          this.ySpeed = tileSize * 1;
+          if (this.ySpeed === 0 || this.tail.length === 0) {
+            this.ySpeed = tileSize * 1;
+          }
           break;
         case 'Left' :
-          this.xSpeed = -tileSize * 1;
+          if (this.xSpeed === 0 || this.tail.length === 0) {
+            this.xSpeed = -tileSize * 1;
+          }
           this.ySpeed = 0;
           break;
         case 'Right' :
-          this.xSpeed = tileSize * 1;
+          if (this.xSpeed === 0 || this.tail.length === 0) {
+            this.xSpeed = tileSize * 1;
+          }
           this.ySpeed = 0;
           break;
         case 'Home' :
@@ -41,6 +49,7 @@ class Snake
     {
       for (var i=0; i<this.tail.length; i++) {
         if(this.x === this.tail[i].x && this.y === this.tail[i].y) {
+          gameoverSound.play();
           this.gameover();
           return true;
         }
@@ -108,6 +117,7 @@ class Snake
           this.x < 0 ||
           this.y < 0
         ) {
+          gameoverSound.play();
           this.gameover();
         }
       } else {
