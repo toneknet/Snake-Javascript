@@ -49,7 +49,6 @@ class Snake
     {
       for (var i=0; i<this.tail.length; i++) {
         if(this.x === this.tail[i].x && this.y === this.tail[i].y) {
-          gameoverSound.play();
           this.gameover();
           return true;
         }
@@ -77,6 +76,7 @@ class Snake
       if(this.x === fruit.x && this.y === fruit.y) {
         this.total++;
         eatSound.play();
+        if (gameSpeed > 50) gameSpeed-= 5;
         return true;
       }
       return false;
@@ -84,20 +84,31 @@ class Snake
 
     gameover()
     {
+      gameoverSound.play();
+      if (this.total > highscore) {
+        highscore = this.total;
+        newhighscore = true;
+      }
+
+      // Reset all variables
       this.total = 0;
       this.tail = [];
       this.xSpeed = 0;
       this.ySpeed = 0;
+      gameSpeed = 250;
       game=0;
       bolGameOver = true;
     }
 
     setStart()
     {
+      console.log("Game Started");
       this.x = (mapSizeW * tileSize) / 2;
       this.y = (mapSizeH * tileSize) / 2;
-      game=1;
+      game = 1;
+      newhighscore = false;
       fruit.pickLocation();
+      bolGameOver = false;
     }
 
     update()
@@ -111,14 +122,13 @@ class Snake
       this.x += this.xSpeed;
       this.y += this.ySpeed;
 
-      if (!wall ) {
+      if (wall ) {
         if (
-          this.x > canvas.width ||
-          this.y > canvas.height ||
-          this.x < 0 ||
-          this.y < 0
+          this.x >= canvas.width ||
+          this.y >= canvas.height ||
+          this.x <= 0 ||
+          this.y <= 0
         ) {
-          gameoverSound.play();
           this.gameover();
         }
       } else {
