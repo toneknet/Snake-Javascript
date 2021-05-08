@@ -2,9 +2,9 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
 
 
-var tileSize = 25;
-var mapSizeH = 24;
-var mapSizeW = 24;
+var tileSize = 25; // 25
+var mapSizeH = 24; // 24
+var mapSizeW = 24; // 24
 
 const scale = 10;
 
@@ -34,13 +34,6 @@ function setupGame() {
   drawGame();
 }
 
-/*function startGame() {
-  fruit.pickLocation();
-  game = 1;
-
-
-}*/
-
 function drawDebug() {
   ctx.fillStyle = "#ffffff";
   // Draw Speed
@@ -59,7 +52,6 @@ function drawDebug() {
 function drawWall() {
   ctx.strokeStyle = 'red';
   ctx.lineWidth = 2;
-
   // top
   ctx.beginPath();
   ctx.moveTo(1, 1);
@@ -77,7 +69,6 @@ function drawWall() {
   ctx.moveTo(canvas.width - 1, 1);
   ctx.lineTo(canvas.width - 1, canvas.height-1);
   ctx.stroke();
-
 }
 
 
@@ -109,7 +100,7 @@ function drawGame() {
     ctx.fillText("Score: " + snake.total,canvas.width-80,20);
 
   }
-  drawDebug();
+  //drawDebug();
   setTimeout(drawGame, gameSpeed);
 }
 
@@ -137,34 +128,36 @@ function gameOver() {
 
   if (bolGameOver) {
     ctx.font = "60px Orbitron";
-    var textString = "GAME OVER";
-    textWidth = ctx.measureText(textString ).width;
-    ctx.fillText(textString,(canvas.width/2) - (textWidth / 2),canvas.height/2);
+    drawTextCentered("GAME OVER",canvas.height/2);
   }
+
   if (Math.floor(frameSpeed % 1.5)) {
     showAnyKey = (showAnyKey) ? false : true;
   }
   if (showAnyKey) {
     ctx.font = "20px Orbitron";
-    var textString = "PRESS ANY KEY TO START";
-    textWidth = ctx.measureText(textString ).width;
-    // Flash av denna text
-    ctx.fillText(textString,(canvas.width/2) - (textWidth / 2),canvas.height/2+40);
+    drawTextCentered("PRESS ANY KEY TO START", canvas.height/2+40);
   }
 
-
-  updateWallText();
-}
-
-function updateWallText() {
+  // Wall settings
   ctx.font = "16px Orbitron";
   var textString = "HOME key toggles wall collission! Its now ";
   textString+= (wall) ? "ON" : "OFF";
-//  textStringx= (wall) ? "" : "Walls will kill you";
-  ctx.fillText(textString,5,canvas.height-18);
-//ctx.fillText(textString,5,canvas.height-38);
-//  ctx.fillText(textStringx,5,canvas.height-18);
+  drawTextCentered(textString,canvas.height-18);
+
+  // credits
+  ctx.font = "12px Orbitron";
+  ctx.fillStyle = "#fe019a";
+  drawTextCentered("coded and flavoured by MrSlade with help from tutorials and guides and some thinking", (canvas.height/2+70));
+
 }
+
+function drawTextCentered(textString, textHeight) {
+  textWidth = ctx.measureText(textString ).width;
+  ctx.fillText(textString,(canvas.width/2) - (textWidth / 2),textHeight);
+}
+
+
 
 /*
 //var speed = 7;
