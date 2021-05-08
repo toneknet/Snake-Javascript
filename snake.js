@@ -123,11 +123,11 @@ class Snake
       this.y += this.ySpeed;
 
       if (wall ) {
-        if (
-          this.x >= canvas.width ||
-          this.y >= canvas.height ||
-          this.x <= 0 ||
-          this.y <= 0
+        if ( // removed = after every sign to get easier to survive?
+          this.x > canvas.width ||
+          this.y > canvas.height ||
+          this.x < 0 ||
+          this.y < 0
         ) {
           this.gameover();
         }

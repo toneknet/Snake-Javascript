@@ -8,8 +8,18 @@ class Fruit
 
   draw()
   {
-    ctx.fillStyle = "#4cafab";
-    ctx.fillRect(this.x, this.y, tileSize, tileSize);
+    //ctx.fillStyle = "#4cafab";
+    //ctx.fillRect(this.x, this.y, tileSize, tileSize);
+
+    ctx.beginPath();
+    ctx.arc(this.x+(tileSize/2), this.y+(tileSize/2), tileSize/2, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+/*    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#003300';
+    ctx.stroke();
+*/
+
   }
 
   pickLocation()
