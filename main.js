@@ -112,6 +112,7 @@ window.addEventListener('keydown', ((evt) => {
 
 
 function gameOver() {
+  var halfScreen = canvas.height/2;
 
   if (highscore > 0) {
     ctx.fillStyle = "#39ff14";
@@ -121,34 +122,40 @@ function gameOver() {
     if (newhighscore) {
       var textString = "NEW " + textString;
     }
-     textWidth = ctx.measureText(textString ).width;
-    ctx.fillText(textString,(canvas.width/2) - (textWidth / 2),canvas.height/2-65);
+    drawTextCentered(textString, halfScreen - (halfScreen / 2));
   }
   ctx.fillStyle = "white";
-
+  ctx.font = "60px Orbitron";
   if (bolGameOver) {
-    ctx.font = "60px Orbitron";
-    drawTextCentered("GAME OVER",canvas.height/2);
+    drawTextCentered("GAME OVER",halfScreen);
   }
+
+  drawTextCentered("SNAKE",50);
+
+  ctx.font = "16px Orbitron";
+  drawTextCentered("BY MrSlade",70);
+
+
 
   if (Math.floor(frameSpeed % 1.5)) {
     showAnyKey = (showAnyKey) ? false : true;
   }
   if (showAnyKey) {
     ctx.font = "20px Orbitron";
-    drawTextCentered("PRESS ANY KEY TO START", canvas.height/2+40);
+    drawTextCentered("PRESS ANY KEY TO START", halfScreen + 40);
   }
 
   // Wall settings
   ctx.font = "16px Orbitron";
   var textString = "HOME key toggles wall collission! Its now ";
   textString+= (wall) ? "ON" : "OFF";
-  drawTextCentered(textString,canvas.height-18);
+  drawTextCentered(textString,halfScreen + (halfScreen / 2));
 
   // credits
   ctx.font = "12px Orbitron";
   ctx.fillStyle = "#fe019a";
-  drawTextCentered("coded and flavoured by MrSlade with help from tutorials and guides and some thinking", (canvas.height/2+70));
+
+  drawTextCentered("coded and flavoured by MrSlade with help from tutorials and guides and some thinking", canvas.height-10);
 
 }
 
