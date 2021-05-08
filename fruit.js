@@ -24,8 +24,8 @@ class Fruit
 
   pickLocation()
   {
-    this.x = (Math.floor(Math.random() * mapSizeW - 1) + 1) * tileSize;
-    this.y = (Math.floor(Math.random() * mapSizeH - 1) + 1) * tileSize;
+    this.x = (Math.floor(Math.random() * mapSize - 1) + 1) * tileSize;
+    this.y = (Math.floor(Math.random() * mapSize - 1) + 1) * tileSize;
     // Check if not in tail..
     for (var i=0; i<snake.tail.length; i++) {
       if(this.x === snake.tail[i].x && this.y === snake.tail[i].y) {

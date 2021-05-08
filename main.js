@@ -2,9 +2,8 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
 
 
-var tileSize = 25; // 25
-var mapSizeH = 24; // 24
-var mapSizeW = 24; // 24
+var tileSize = 15; // 25
+var mapSize = 50; // 24
 
 const scale = 10;
 
@@ -12,7 +11,7 @@ var LastTime = 0;
 var game = 0; // 0 = stop, 1 = run
 var bolGameOver = false;
 
-var gameSpeed = 250;
+var gameSpeed = 200;
 var highscore = 5;
 var newhighscore = false;
 
@@ -22,15 +21,27 @@ var showAnyKey = true;
 const eatSound = new Audio("sound1.wav");
 const gameoverSound = new Audio("sound2.wav");
 
-canvas.width = tileSize * mapSizeW;
-canvas.height = tileSize * mapSizeH;
+canvas.width = tileSize * mapSize;
+canvas.height = tileSize * mapSize;
 
 var snake;
 var wall = true;
 
+var mode=0;
+var gamesizeOptions = [];
+gamesizeOptions.push({
+  tileSize: 25,
+  mapSize: 24
+});
+gamesizeOptions.push({
+  tileSize: 15,
+  mapSize: 50
+});
+
 function setupGame() {
   snake = new Snake();
   fruit = new Fruit();
+  changeSize();
   drawGame();
 }
 
@@ -50,7 +61,7 @@ function drawDebug() {
 }
 
 function drawWall() {
-  ctx.strokeStyle = 'red';
+  ctx.strokeStyle = 'white';
   ctx.lineWidth = 2;
   // top
   ctx.beginPath();
@@ -105,25 +116,23 @@ function drawGame() {
 }
 
 window.addEventListener('keydown', ((evt) => {
+  var allowedKeys = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','F1','F2', ' '];
+  for (var i = 0; i < allowedKeys.length; i++) {
+    evt.preventDefault();
+  }
   const direction = evt.key.replace('Arrow','');
-  if (!game && direction !== "Home") snake.setStart();
+  if (!game && (direction !== evt.key || evt.key === " ") ) snake.setStart();
   snake.changeDirection(direction);
 }))
 
 
-
-var hue = 0;
-var hsl = "white";
-function bgcolor() {
-    hue = hue + Math.random() * 3 ;
-    //context.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
-    hsl = 'hsl(' + hue + ', 100%, 50%)';
-//    return 'hsl(' + hue + ', 100%, 50%)';
-
-    //context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+function changeSize() {
+  tileSize = gamesizeOptions[mode].tileSize;
+  mapSize = gamesizeOptions[mode].mapSize;
+  canvas.width = tileSize * mapSize;
+  canvas.height = tileSize * mapSize;
 }
 
-setInterval(bgcolor, 30 );
 
 
 function gameOver() {
@@ -141,13 +150,35 @@ function gameOver() {
   }
   if (showAnyKey) {
     ctx.font = "20px Orbitron";
-    drawTextCentered("PRESS ANY KEY TO START", halfScreen + 40);
+    drawTextCentered("PRESS ANY ARROW KEY TO START", halfScreen + 40);
   }
+
+  // Options
+  ctx.font = "20px Orbitron";
+  ctx.fillStyle = "white";
+  drawTextCentered("OPTIONS",halfScreen + (halfScreen / 2)-30);
+
   // Wall settings
   ctx.font = "16px Orbitron";
-  var textString = "HOME key toggles wall collission! Its now ";
-  textString+= (wall) ? "ON" : "OFF";
+  ctx.fillStyle = "white";
+  var textString = "F1 key toggles wall collission!";
   drawTextCentered(textString,halfScreen + (halfScreen / 2));
+  ctx.fillStyle = "red";
+  textString= (wall) ? "ON" : "OFF";
+  drawTextCentered(textString,halfScreen + (halfScreen / 2+20));
+
+  // Wall settings
+  ctx.font = "16px Orbitron";
+  ctx.fillStyle = "white";
+  var textString = "F2 toggle map size (tilesize, mapsize)";
+  drawTextCentered(textString,halfScreen + (halfScreen / 2)+40);
+  ctx.fillStyle = "red";
+  textString= (mode) ? "Big" : "Standard" ;
+  drawTextCentered(textString,halfScreen + (halfScreen / 2)+60);
+
+  if (wall) drawWall();
+
+
   // Get changeable color
   ctx.fillStyle = hsl; //bgcolor();
   // Highscore

@@ -2,8 +2,8 @@ class Snake
 {
     constructor()
     {
-      this.x = (mapSizeW * tileSize) / 2;
-      this.y = (mapSizeH * tileSize) / 2;
+      this.x = (mapSize * tileSize) / 2;
+      this.y = (mapSize * tileSize) / 2;
       this.xSpeed = 0;
       this.ySpeed = 0;
       this.total = 0;
@@ -42,6 +42,22 @@ class Snake
             wall = (wall) ? false : true;
           }
           break;
+
+        case 'F1' :
+          if (!game) {
+            wall = (wall) ? false : true;
+          }
+          break;
+        case 'F2' :
+          if (!game) {
+            mode = (mode) ? 0 : 1;
+            changeSize();
+          }
+          break;
+
+
+
+
       }
     }
 
@@ -103,8 +119,9 @@ class Snake
     setStart()
     {
       console.log("Game Started");
-      this.x = (mapSizeW * tileSize) / 2;
-      this.y = (mapSizeH * tileSize) / 2;
+
+      this.x = (mapSize * tileSize) / 2;
+      this.y = (mapSize * tileSize) / 2;
       game = 1;
       newhighscore = false;
       fruit.pickLocation();
