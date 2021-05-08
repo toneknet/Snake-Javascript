@@ -56,3 +56,18 @@ function generateColor(colorStart,colorEnd,colorCount){
 	return saida;
 
 }
+
+// https://codepen.io/bastian_fiessinger/pen/pvdGOo
+// https://stackoverflow.com/a/28480835
+var hue = 0;
+var hsl = "white";
+function bgcolor() {
+    hue = hue + Math.random() * 3 ;
+    //context.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
+    hsl = 'hsl(' + hue + ', 100%, 50%)';
+//    return 'hsl(' + hue + ', 100%, 50%)';
+
+    //context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
+setInterval(bgcolor, 30 );

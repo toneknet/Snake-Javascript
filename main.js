@@ -111,32 +111,31 @@ window.addEventListener('keydown', ((evt) => {
 }))
 
 
+
+var hue = 0;
+var hsl = "white";
+function bgcolor() {
+    hue = hue + Math.random() * 3 ;
+    //context.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
+    hsl = 'hsl(' + hue + ', 100%, 50%)';
+//    return 'hsl(' + hue + ', 100%, 50%)';
+
+    //context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
+setInterval(bgcolor, 30 );
+
+
 function gameOver() {
   var halfScreen = canvas.height/2;
-
-  if (highscore > 0) {
-    ctx.fillStyle = "#39ff14";
-    ctx.font = "16px Orbitron";
-
-    var textString = "HIGHSCORE: " + highscore;
-    if (newhighscore) {
-      var textString = "NEW " + textString;
-    }
-    drawTextCentered(textString, halfScreen - (halfScreen / 2));
-  }
+  // Game Over
   ctx.fillStyle = "white";
   ctx.font = "60px Orbitron";
   if (bolGameOver) {
     drawTextCentered("GAME OVER",halfScreen);
   }
-
-  drawTextCentered("SNAKE",50);
-
-  ctx.font = "16px Orbitron";
-  drawTextCentered("BY MrSlade",70);
-
-
-
+  // Press any key to continue
+  ctx.fillStyle = "white";
   if (Math.floor(frameSpeed % 1.5)) {
     showAnyKey = (showAnyKey) ? false : true;
   }
@@ -144,19 +143,32 @@ function gameOver() {
     ctx.font = "20px Orbitron";
     drawTextCentered("PRESS ANY KEY TO START", halfScreen + 40);
   }
-
   // Wall settings
   ctx.font = "16px Orbitron";
   var textString = "HOME key toggles wall collission! Its now ";
   textString+= (wall) ? "ON" : "OFF";
   drawTextCentered(textString,halfScreen + (halfScreen / 2));
-
+  // Get changeable color
+  ctx.fillStyle = hsl; //bgcolor();
+  // Highscore
+  if (highscore > 0) {
+    //ctx.fillStyle = "#39ff14";
+    ctx.font = "16px Orbitron";
+    var textString = "HIGHSCORE: " + highscore;
+    if (newhighscore) {
+      var textString = "NEW " + textString;
+    }
+    drawTextCentered(textString, halfScreen - (halfScreen / 2));
+  }
+  // Title
+  ctx.font = "60px Orbitron";
+  drawTextCentered("SNAKE",50);
+  ctx.font = "16px Orbitron";
+  drawTextCentered("BY MrSlade",70);
   // credits
   ctx.font = "12px Orbitron";
-  ctx.fillStyle = "#fe019a";
-
+  //ctx.fillStyle = "#fe019a";
   drawTextCentered("coded and flavoured by MrSlade with help from tutorials and guides and some thinking", canvas.height-10);
-
 }
 
 function drawTextCentered(textString, textHeight) {
