@@ -54,10 +54,6 @@ class Snake
             changeSize();
           }
           break;
-
-
-
-
       }
     }
 
@@ -118,8 +114,6 @@ class Snake
 
     setStart()
     {
-      console.log("Game Started");
-
       this.x = (mapSize * tileSize) / 2;
       this.y = (mapSize * tileSize) / 2;
       game = 1;
